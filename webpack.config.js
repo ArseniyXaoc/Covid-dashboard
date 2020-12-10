@@ -1,33 +1,49 @@
 const path = require('path');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
     mode: 'development',
     entry: './src/scripts/index.js',
     output: {
         path: path.resolve(__dirname, 'dist'),
-        filename: '[name].js'
+        filename: '[name].js',
     },
+    devtool: 'cheap-module-source-map',
     devServer: {
-        contentBase: path.join(__dirname, 'dist'),
+        contentBase: path.join(__dirname, 'src'),
         compress: true,
-        port: 4200,
-        index: 'index.html',
+        inline: true,
         hot: true,
+        port: 4200,
+        watchContentBase: true,
     },
-    plugins: [new HtmlWebpackPlugin({
-        title: 'Covid Dashboard',
-        template: './src/index.html',
-        filename: './index.html'
-        }),],
-
+    plugins: [
+        new HtmlWebpackPlugin({
+            template: './src/index.html',
+        }),
+        new MiniCssExtractPlugin({
+            filename: 'style.css',
+            chunkFilename: '[name].css',
+        }),
+    ],
     module: {
-        rules: [{
-            test: /\.m?js$/,
-            exclude: /(node_modules)/,
-            use: {
-                loader: "babel-loader"
-            }
-        }]
-    }
-}
+        rules: [
+            {
+                test: /\.m?js$/,
+                exclude: /(node_modules)/,
+                use: {
+                    loader: 'babel-loader',
+                },
+            },
+            {
+                test: /\.s[ac]ss$/i,
+                use: [
+                    MiniCssExtractPlugin.loader,
+                    'css-loader',
+                    'sass-loader',
+                ],
+            },
+        ],
+    },
+};
