@@ -1,5 +1,7 @@
 import '../styles/index.scss';
 import AppComponent from './components/app/AppComponent';
+import DataService from './services/data.service';
 
-const app = new AppComponent();
+const dataServise = new DataService();
+const app = new AppComponent(dataServise);
 app.run();

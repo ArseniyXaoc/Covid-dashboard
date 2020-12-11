@@ -1,27 +1,25 @@
+import {COVID_API_URL, AllCountriesSummaryData} from '../constants/data-service.constants';
+
 export default class DataService {
     constructor() {
-        this.url = 'http://api.covid19api.com/';
     }
 
-    async getData(dataRequest){
+    async getData(dataRequest) {
         try {
-            let response = await fetch(`https://cors-anywhere.herokuapp.com/${this.url}${dataRequest}`);
-            let data = await response.json();
+            const response = await fetch(`${COVID_API_URL}${this.url}${dataRequest}`);
+            const data = await response.json();
             return data;
         } catch (error) {
-            throw new Error('no data loaded');
+            throw new Error(NO_DATA_TEXT);
         }
     }
 
-    async getAllCityData() {
-        const allCountries = 'summary'
-        let allCityData;
+    async getAllCountriesSummaryData() {
         try {
-            allCityData = await this.getData(allCountries);
-            return allCityData;
+            return await this.getData(AllCountriesSummaryData);;
         }
         catch (error) {
-            throw new Error('no data loaded');
+            throw new Error(NO_DATA_TEXT);
         }
     }
 }

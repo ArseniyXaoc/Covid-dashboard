@@ -1,11 +1,15 @@
-import DataService from '../../services/data.service'
+
 export default class AppComponent {
-    constructor() {
-        this.dataservise = new DataService();
+    constructor(dataServise) {
+        this.dataServise = dataServise;
+        this.allCountriesData = this.fetchAllData();
     }
 
     run() {
-        console.log('App is running!');
-        this.allCityData = this.dataservise.getAllCityData();
+        console.log(this.allCountriesData);
+    }
+
+    async fetchAllData() {
+        return await this.dataServise.getAllCountriesSummaryData();
     }
 }
