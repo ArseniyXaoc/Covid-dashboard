@@ -1,15 +1,18 @@
-
 export default class AppComponent {
-    constructor(dataServise) {
-        this.dataServise = dataServise;
-        this.allCountriesData = this.fetchAllData();
+    constructor(dataService) {
+        this.dataService = dataService;
+        this.allCountriesData = {};
+        this.fetchAllData();
     }
 
+    // eslint-disable-next-line class-methods-use-this
     run() {
-        console.log(this.allCountriesData);
+        console.log('App start!');
     }
 
-    async fetchAllData() {
-        return await this.dataServise.getAllCountriesSummaryData();
+    fetchAllData() {
+        this.dataService.getAllCountriesSummaryData().then((data) => {
+            this.allCountriesData = data;
+        });
     }
 }
