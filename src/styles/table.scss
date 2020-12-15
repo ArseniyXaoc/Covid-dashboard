@@ -1,0 +1,39 @@
+@import './valiables';
+
+.right-sidebar {
+    display: block;
+    width: 40%;
+}
+
+.table__sick, .table__death, .table__get-well{
+    height: 100%;
+    width: 33.33%;
+    margin-right: 5px;
+    background: $violet_background;
+    display: flex;
+    flex-direction: column;
+}
+
+.table__get-well{
+    margin-right: 0px;
+}
+
+.table {
+    display: flex;
+    flex-direction: column;
+    background: $gary-background;
+}
+
+.table__indicators {
+    display: flex;
+    background: $gary-background;
+    width: 100%;
+    height: 100%;
+}
+
+.table__switch {
+    width: 100%;
+    height: 10%;
+    background: $violet_background;
+    margin-bottom: 5px;
+}
