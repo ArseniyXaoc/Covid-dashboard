@@ -17,11 +17,24 @@
         </div>
         <div class="right-sidebar">
             <section class="table">
-                <div class="table__switch"></div>
+                <div class="table__switch switch">
+                    <div class="switch__work">
+                        <div><span class="total selected">Total</span> / <span class="last-day">Last Day</span>
+                            <input class="switch__input checkbox1" type="checkbox" id="checkbox1" />
+                            <label class="switch__label" for="checkbox1"></label>
+                        </div>
+                        <div>
+                            <span class="global selected">Global</span> /<span class="per-one-hundred">100k population</span> 
+                            <input class="switch__input checkbox2" type="checkbox" id="checkbox2" />
+                            <label class="switch__label" for="checkbox2"></label>
+                        </div>
+                    </div>
+                    <div class="switch__main-text">Global</div>
+                </div>
                 <div class="table__indicators">
-                    <div class="table__sick"></div>
-                    <div class="table__death"></div>
-                    <div class="table__get-well"></div>
+                    <div class="table__sick"><span>Confermed</span></div>
+                    <div class="table__death"><span>Deaths</span></div>
+                    <div class="table__get-well"><span>Recovered</span></div>
                 </div>
             </section>
             <section class="chart">Chart</section>

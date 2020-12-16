@@ -17,11 +17,8 @@ export default class TableDataServise {
         const prefixDataApi = apiData[CURRENT_DATA_GLOBAL];
 
         if (state === 'global') {
-            if (dayOrTotal === 'total') {
-                this.getGlobalDataForLastDay(prefixDataApi);
-            } else {
-                this.getGlobalStateGlobal(prefixDataApi);
-            }
+            if (dayOrTotal === 'total') this.getGlobalDataForLastDay(prefixDataApi);
+            else this.getGlobalStateGlobal(prefixDataApi);
         }
         return this.globalDataCases;
     }
