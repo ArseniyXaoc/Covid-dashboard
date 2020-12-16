@@ -1,25 +1,25 @@
-export class list {
-    constructor() {
+// eslint-disable-next-line import/prefer-default-export
+import { ListElementsCreater } from './listElementsCreater';
+
+// eslint-disable-next-line import/prefer-default-export
+export class List {
+    constructor(dataService) {
+        this.dataService = dataService;
         this.list = document.querySelector('.list');
     }
 
-    getBlock() {
-        let block = document.createElement('div');
-        block.className = 'item';
-        this.list.append(block);
-        return block;
-    }
-
-    getList(data) {
-        data.forEach(element => {
-            let country = this.getBlock();
-            country.innerHTML = `
-                <span class="country_cases">${element}</span>
-                <span class="country">${element}</span>
-            `;
-            return;
+    getListContent(predicate) {
+        this.dataSort(predicate);
+        const listElementsCreater = new ListElementsCreater();
+        listElementsCreater.crateTextElement('h2', 'list_header', 'Cases by Country', this.list);
+        this.dataService.forEach((element) => {
+            const country = listElementsCreater.createBlock('item', this.list);
+            listElementsCreater.crateTextElement('span', 'country_cases', `${element[predicate]} `, country);
+            listElementsCreater.crateTextElement('span', 'country', element.Country, country);
         });
-        return;
     }
 
+    dataSort(predicate) {
+        this.dataService = this.dataService.sort((a, b) => b[predicate] - a[predicate]);
+    }
 }
