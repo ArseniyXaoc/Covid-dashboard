@@ -1,6 +1,4 @@
-import '../table/TableComponent';
 import TableComponent from '../table/TableComponent';
-import TableDataServise from '../table/table.data-service';
 
 export default class AppComponent {
     constructor(dataService) {

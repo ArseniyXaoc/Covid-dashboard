@@ -1,6 +1,6 @@
 import TableDataServise from './table.data-service';
 import {
-    querySelector, createElement, classListContains,
+    querySelector, classListContains,
     setLastChildTextValue, toggleColorCheckedElement,
     createNewDivElement, addFieldToDivElement, clearData,
 } from './table.htmlUtils';
