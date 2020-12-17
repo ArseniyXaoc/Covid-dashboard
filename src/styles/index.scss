@@ -1,5 +1,6 @@
 @import './valiables';
 @import './list.scss';
+@import './globalCases';
 
 * {
     margin: 0;
@@ -10,14 +11,21 @@
     font-family: 'Roboto';
 }
 
-.table, .chart, .map, .list {
+.table, .chart, .map, .list, .globalCases {
     background: $violet_background;
     text-align: center;
     font-size: 2rem;
     margin: 0 5px 5px 0;
 }
 
-.list, .map {
+.globalCases {
+    height: calc(20%);
+}
+.list {
+    height: calc(80% - 5px);
+}
+
+.map {
     height: calc(100%);
 }
 

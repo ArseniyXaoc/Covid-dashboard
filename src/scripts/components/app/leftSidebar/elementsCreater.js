@@ -1,5 +1,5 @@
 // eslint-disable-next-line import/prefer-default-export
-export class ListElementsCreater {
+export class ElementsCreater {
     // eslint-disable-next-line class-methods-use-this
     createBlock(className, parent) {
         const block = document.createElement('div');
