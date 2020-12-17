@@ -22,4 +22,23 @@ export default class DataService {
             throw new Error(NO_DATA_TEXT);
         }
     }
+
+    // eslint-disable-next-line class-methods-use-this
+    async getPopulationData() {
+        try {
+            const response = await fetch('../../assets/all.json');
+            const data = await response.json();
+            return data;
+        } catch (error) {
+            throw new Error(NO_DATA_TEXT);
+        }
+    }
+
+    async getAllCountriesPopulationData() {
+        try {
+            return await this.getPopulationData();
+        } catch (error) {
+            throw new Error(NO_DATA_TEXT);
+        }
+    }
 }
