@@ -1,6 +1,7 @@
 @import './valiables';
 
 .list {
+    height: calc(80% - 5px);
     display: flex;
     flex-direction: column;
     overflow: auto;
@@ -16,6 +17,12 @@
         .country_cases {
             color: $base-violet-color;
             font-weight: bold;
+        }
+
+        .country_flag {
+            display: inline-block;
+            margin-bottom: -4px;
+
         }
     }
 }

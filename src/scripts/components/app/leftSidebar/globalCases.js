@@ -1,27 +1,26 @@
-import { ElementsCreater } from './elementsCreater';
+import ElementsCreator from './elementsCreator';
 
-// eslint-disable-next-line import/prefer-default-export
-export class GlobalCases {
-    constructor(allCountriesData) {
-        this.allCountriesData = allCountriesData;
-        this.globalCases = document.querySelector('.globalCases');
-        this.predicateSpan = undefined;
+export default class GlobalCases {
+    constructor() {
+        this.allCountriesData = [];
+        this.globalCasesElement = document.querySelector('.globalCases');
+        this.stateSpan = undefined;
         this.valueSpan = undefined;
         this.createHTML();
     }
 
     createHTML() {
-        const elementsCreater = new ElementsCreater();
-        elementsCreater.crateTextElement('h2', 'globalCases_header', 'Global cases', this.globalCases);
-        this.valueSpan = elementsCreater.crateTextElement('span', 'globalCases_value', '', this.globalCases);
-        this.predicateSpan = elementsCreater.crateTextElement('span', 'globalCases_predicate', '', this.globalCases);
+        ElementsCreator.crateTextElement('h2', 'globalCases_header', 'Global cases', this.globalCasesElement);
+        this.valueSpan = ElementsCreator.crateTextElement('span', 'globalCases_value', '', this.globalCasesElement);
+        this.stateSpan = ElementsCreator.crateTextElement('span', 'globalCases_state', '', this.globalCasesElement);
     }
 
-    showContent(predicate) {
-        const predicateBody = predicate.split('New').join('');
-        const newCases = predicate;
-        const totalCases = 'Total'.concat(predicateBody);
-        this.valueSpan.innerHTML = `${this.allCountriesData[newCases]} / ${this.allCountriesData[totalCases]}`;
-        this.predicateSpan.innerHTML = `new ${predicateBody.toLowerCase()} / total ${predicateBody.toLowerCase()}`;
+    showContent(data, state) {
+        this.allCountriesData = data;
+        const stateBody = state.split('New').join('');
+        const newCases = state;
+        const totalCases = 'Total'.concat(stateBody);
+        this.valueSpan.innerText = `${this.allCountriesData[newCases]} / ${this.allCountriesData[totalCases]}`;
+        this.stateSpan.innerText = `new ${stateBody.toLowerCase()} / total ${stateBody.toLowerCase()}`;
     }
 }

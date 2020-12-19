@@ -1,32 +1,37 @@
-// eslint-disable-next-line import/prefer-default-export
-// import DataService from '../../../services/data.service';
-import { ElementsCreater } from './elementsCreater';
+import ElementsCreator from './elementsCreator';
 
-// eslint-disable-next-line import/prefer-default-export
-export class List {
-    constructor(dataService) {
-        this.dataService = dataService;
-        this.elementsCreater = undefined;
+export default class List {
+    constructor() {
+        this.countryData = [];
         this.list = document.querySelector('.list');
-        this.countryContainers = this.createHTML();
+        this.countryContainers = undefined;
     }
 
     createHTML() {
-        this.elementsCreater = new ElementsCreater();
-        this.elementsCreater.crateTextElement('h2', 'list_header', 'Cases by Country', this.list);
-        return Array(this.dataService.length).fill('').map(() => this.elementsCreater.createBlock('item', this.list));
-    }
-
-    showContent(predicate) {
-        this.dataSort(predicate);
-        this.dataService.forEach((element, item) => {
-            this.countryContainers[item].innerHTML = '';
-            this.elementsCreater.crateTextElement('span', 'country_cases', `${element[predicate]} `, this.countryContainers[item]);
-            this.elementsCreater.crateTextElement('span', 'country', element.Country, this.countryContainers[item]);
+        ElementsCreator.crateTextElement('h2', 'list_header', 'Cases by Country', this.list);
+        return Array(this.countryData.length).fill('').map(() => {
+            const block = ElementsCreator.createBlock('item', this.list);
+            const casesSpan = ElementsCreator.crateTextElement('span', 'country_cases', '', block);
+            const nameSpan = ElementsCreator.crateTextElement('span', 'country', '', block);
+            const flagImg = ElementsCreator.crateImg('country_flag', 'flag', block);
+            return { countryFlag: flagImg, countryName: nameSpan, countryCases: casesSpan };
         });
     }
 
-    dataSort(predicate) {
-        this.dataService = this.dataService.sort((a, b) => b[predicate] - a[predicate]);
+    showContent(data, state) {
+        this.countryData = data;
+        if (this.countryContainers === undefined) {
+            this.countryContainers = this.createHTML();
+        }
+        this.dataSort(state);
+        this.countryData.forEach((element, item) => {
+            this.countryContainers[item].countryCases.innerText = `${element[state]} `;
+            this.countryContainers[item].countryName.innerText = `${element.Country} `;
+            this.countryContainers[item].countryFlag.src = `https://www.countryflags.io/${element.CountryCode}/flat/16.png`;
+        });
+    }
+
+    dataSort(state) {
+        this.countryData = this.countryData.sort((a, b) => b[state] - a[state]);
     }
 }

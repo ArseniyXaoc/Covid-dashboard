@@ -1,12 +1,14 @@
-import { List } from './leftSidebar/list';
-import { GlobalCases } from './leftSidebar/globalCases';
+import List from './leftSidebar/list';
+import GlobalCases from './leftSidebar/globalCases';
 
 export default class AppComponent {
     constructor(dataService) {
         this.dataService = dataService;
         this.allCountriesData = {};
         this.fetchAllData();
-        this.predicates = ['NewConfirmed', 'NewDeaths', 'NewRecovered'];
+        this.dataStates = ['NewConfirmed', 'NewDeaths', 'NewRecovered'];
+        this.globalCases = new GlobalCases();
+        this.list = new List();
     }
 
     // eslint-disable-next-line class-methods-use-this
@@ -17,12 +19,9 @@ export default class AppComponent {
     fetchAllData() {
         this.dataService.getAllCountriesSummaryData().then((data) => {
             this.allCountriesData = data;
-            const globalCases = new GlobalCases(this.allCountriesData.Global);
-            globalCases.showContent(this.predicates[0]);
-            const list = new List(this.allCountriesData.Countries);
-            // the parameter is determine by the state of the page
-            list.showContent(this.predicates[0]);
-            console.log(this.allCountriesData.Countries.length);
+            this.globalCases.showContent(this.allCountriesData.Global, this.dataStates[0]);
+            this.list.showContent(this.allCountriesData.Countries, this.dataStates[0]);
+            console.log(this.allCountriesData);
         });
     }
 }
