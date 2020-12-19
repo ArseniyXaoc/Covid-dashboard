@@ -1,0 +1,29 @@
+@import './valiables';
+
+.list {
+    height: calc(80% - 5px);
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+
+    .list_header {
+        padding: 0.7em 0;
+    }
+
+    .item {
+        padding: 0.5em;
+        border-bottom: 1px solid $secondary-text-color;
+
+        .country_cases {
+            color: $base-violet-color;
+            font-weight: bold;
+        }
+
+        .country_flag {
+            display: inline-block;
+            margin-bottom: -4px;
+
+        }
+    }
+}
+
