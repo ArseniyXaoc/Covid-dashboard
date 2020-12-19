@@ -21,7 +21,6 @@ export default class AppComponent {
             this.allCountriesData = data;
             this.globalCases.showContent(this.allCountriesData.Global, this.dataStates[0]);
             this.list.showContent(this.allCountriesData.Countries, this.dataStates[0]);
-            console.log(this.allCountriesData);
         });
     }
 }
