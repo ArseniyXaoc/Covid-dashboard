@@ -10,6 +10,15 @@
         padding: 0.7em 0;
     }
 
+    .search {
+        outline: none;
+        background-color: inherit;
+        margin: 0 10px 20px;
+        border: 2px solid $secondary-text-color;
+        border-radius: 5px;
+        padding: 5px;
+    }
+
     .item {
         padding: 0.5em;
         border-bottom: 1px solid $secondary-text-color;
@@ -22,8 +31,20 @@
         .country_flag {
             display: inline-block;
             margin-bottom: -4px;
-
         }
     }
+}
+
+section::-webkit-scrollbar {
+    width: 10px;
+}
+
+section::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+}
+
+section::-webkit-scrollbar-thumb {
+  background-color: $light-gray;
+  outline: 1px solid $black;
 }
 

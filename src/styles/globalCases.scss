@@ -7,12 +7,16 @@
     justify-content: center;
 
     .globalCases_header {
-        font-size: 1.05em;
+        font-size: 2vw;
         padding: 0.3em;
     }
 
     .globalCases_value {
-        font-size: 1em;
+        font-size: 2vw;
         color: $base-violet-color;
+    }
+
+    .globalCases_state {
+        font-size: 1.1vw;
     }
 }

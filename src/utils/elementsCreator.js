@@ -6,10 +6,9 @@ export default class ElementsCreator {
         return block;
     }
 
-    static crateTextElement(elementType, className, innerHTML, parent) {
+    static crateTextElement(elementType, className, parent) {
         const element = document.createElement(elementType);
         element.className = className;
-        element.innerHTML = innerHTML;
         parent.append(element);
         return element;
     }

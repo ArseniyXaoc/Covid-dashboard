@@ -10,9 +10,10 @@ export default class GlobalCases {
     }
 
     createHTML() {
-        ElementsCreator.crateTextElement('h2', 'globalCases_header', 'Global cases', this.globalCasesElement);
-        this.valueSpan = ElementsCreator.crateTextElement('span', 'globalCases_value', '', this.globalCasesElement);
-        this.stateSpan = ElementsCreator.crateTextElement('span', 'globalCases_state', '', this.globalCasesElement);
+        const globalCases = ElementsCreator.crateTextElement('h2', 'globalCases_header', this.globalCasesElement);
+        globalCases.innerText = 'Global cases';
+        this.valueSpan = ElementsCreator.crateTextElement('span', 'globalCases_value', this.globalCasesElement);
+        this.stateSpan = ElementsCreator.crateTextElement('span', 'globalCases_state', this.globalCasesElement);
     }
 
     showContent(data, state) {
