@@ -1,0 +1,18 @@
+@import './valiables';
+
+.globalCases {
+    height: calc(20%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    .globalCases_header {
+        font-size: 1.05em;
+        padding: 0.3em;
+    }
+
+    .globalCases_value {
+        font-size: 1em;
+        color: $base-violet-color;
+    }
+}

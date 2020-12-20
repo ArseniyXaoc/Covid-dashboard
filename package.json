@@ -29,6 +29,7 @@
     "webpack-dev-server": "^3.11.0"
   },
   "devDependencies": {
+    "chart.js": "^2.9.4",
     "css-loader": "^5.0.1",
     "eslint": "^7.15.0",
     "html-webpack-plugin": "^4.5.0",
