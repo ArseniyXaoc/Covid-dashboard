@@ -5,12 +5,12 @@ const setLastChildTextValue = (item, text) => {
     item.lastElementChild.append(document.createTextNode(text));
 };
 
-function toggleColorCheckedElement(chainged) {
+function toggleCheckedState(changed) {
     const toggleColortotal = querySelector('.total');
     const toggleColorlastDay = querySelector('.last-day');
     const toggleColorglobal = querySelector('.global');
     const toggleColorperOneHundred = querySelector('.per-one-hundred');
-    if (chainged.closest('.checkbox1')) {
+    if (changed.closest('.amount-checkbox')) {
         toggleColortotal.classList.toggle('selected');
         toggleColorlastDay.classList.toggle('selected');
     } else {
@@ -19,26 +19,26 @@ function toggleColorCheckedElement(chainged) {
     }
 }
 
-function createNewDivElement() {
-    const ConfirmedDiv = createElement('div');
-    const DeathsDiv = createElement('div');
-    const RecoveredDiv = createElement('div');
-    const DivElementArr = [ConfirmedDiv, DeathsDiv, RecoveredDiv];
+function createTableColumn() {
+    const confirmedElement = createElement('div');
+    const deathsElement = createElement('div');
+    const recoveredElement = createElement('div');
+    const DivElementArr = { confirmedElement, deathsElement, recoveredElement };
     return DivElementArr;
-    // TableComponent.addFieldToDivElement(this.DivElementArr);
 }
 
 function addFieldToDivElement(arr) {
-    arr.forEach((item) => {
-        item.classList.add('table__element');
-        item.appendChild(createElement('div')).classList.add('Table__List-data-text');
+    Object.keys(arr).forEach((key) => {
+        arr[key].classList.add('table__element');
+        arr[key].appendChild(createElement('div')).classList.add('Table__List-data-text');
     });
 }
 
 function clearData(arr) {
-    arr.forEach((item) => {
-        item.lastElementChild.removeChild(item.lastElementChild.firstChild);
-    });
+    Object.keys(arr).forEach((key) => arr[key].lastElementChild.removeChild(arr[key].lastElementChild.firstChild));
+    // arr.forEach((item) => {
+    //     item.lastElementChild.removeChild(item.lastElementChild.firstChild);
+    // });
 }
 
 export {
@@ -46,8 +46,8 @@ export {
     createElement,
     classListContains,
     setLastChildTextValue,
-    toggleColorCheckedElement,
-    createNewDivElement,
+    toggleCheckedState,
+    createTableColumn,
     addFieldToDivElement,
     clearData,
 };

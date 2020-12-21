@@ -8,3 +8,7 @@ export const CURRENT_DATA_GLOBAL = 'Global';
 export const COUNTRIES_FLAGS_API_URL = 'https://restcountries.eu/rest/v2/all?fields=name;population';
 export const NO_DATA_TEXT = 'No data loaded';
 export const WORLD_POPULATION = 7594000000;
+export const CASES_SELECT = {
+    global: 'global',
+    day: 'total',
+};

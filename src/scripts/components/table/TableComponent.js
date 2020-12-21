@@ -1,38 +1,53 @@
+import '../../../styles/table.scss';
 import TableDataServise from './table.data-service';
 import {
+    tableStates,
+} from './table.config';
+import {
     querySelector, classListContains,
-    setLastChildTextValue, toggleColorCheckedElement,
-    createNewDivElement, addFieldToDivElement, clearData,
-} from './table.htmlUtils';
+    setLastChildTextValue, toggleCheckedState,
+    createTableColumn, addFieldToDivElement, clearData,
+} from '../../utils/table.htmlUtils';
 
 export default class TableComponent {
-    constructor(setData) {
+    constructor() {
+        this.tableDataServise = new TableDataServise();
         this.countryPopulation = {};
-        this.fetchSetAPIData = setData;
+        this.fetchSetAPIData = {};
         this.currentCountry = 0;
         this.confirmedList = querySelector('.table__sick');
         this.deathsList = querySelector('.table__death');
         this.recoveredList = querySelector('.table__get-well');
-        this.GlobalDataState = 'global';
-        this.NewConfermedState = 'new';
-        this.TotalConfermedState = 'total';
-        this.ConfermedState = this.TotalConfermedState;
-        this.switchTotalOrDay = querySelector('.checkbox1');
-        this.globalOr100k = querySelector('.checkbox2');
+        this.titleElement = querySelector('.switch__main-text');
+        this.activeState = tableStates.total;
+        this.switchTotalOrDay = querySelector('.amount-checkbox');
+        this.globalOr100k = querySelector('.indicator-checkbox');
         this.coutryPopulationData = {};
-        this.dataProcessing();
         this.createInterface();
-        this.renderData();
-        this.hendlerEventCheckbox();
     }
 
     dataProcessing() {
-        this.TableDataServise = new TableDataServise();
+        this.globalDataCases = this.tableDataServise.fetchGlobalData(
+            this.fetchSetAPIData,
+            tableStates.global,
+            this.activeState,
+            this.currentCountry,
+            this.globalOr100k.checked,
+            this.coutryPopulationData,
+        );
+        this.currentCountryName = this.tableDataServise.dataApiStateURL.Country;
+        if (this.currentCountryName) this.titleElement.innerText = this.currentCountryName;
+    }
 
-        this.globalDataCases = this.TableDataServise.cashGlobalData(this.fetchSetAPIData,
-            this.GlobalDataState, this.ConfermedState,
-            this.currentCountry, this.globalOr100k.checked,
-            TableComponent.coutryPopulationData);
+    updateData(fetchData) {
+        this.fetchSetAPIData = fetchData;
+        this.dataProcessing();
+        this.renderData();
+    }
+
+    updatePopulationData(fetchData) {
+        this.coutryPopulationData = fetchData;
+        this.hendlerEventCheckbox();
     }
 
     hendlerEventCheckbox() {
@@ -43,33 +58,33 @@ export default class TableComponent {
     changeSetData(event) {
         clearData(this.DivElementArr);
         if (this.switchTotalOrDay.checked) {
-            this.ConfermedState = this.NewConfermedState;
+            this.activeState = tableStates.new;
         } else if (!this.switchTotalOrDay.checked) {
-            this.ConfermedState = this.TotalConfermedState;
+            this.activeState = tableStates.total;
         }
 
-        toggleColorCheckedElement(event.target);
+        toggleCheckedState(event.target);
         this.dataProcessing();
         TableComponent.addDataToNewDivElement(this.DivElementArr, this.globalDataCases);
     }
 
     createInterface() {
-        this.DivElementArr = createNewDivElement();
+        this.DivElementArr = createTableColumn();
         addFieldToDivElement(this.DivElementArr);
     }
 
     renderData() {
-        this.confirmedList.appendChild(this.DivElementArr[0]);
-        this.deathsList.appendChild(this.DivElementArr[1]);
-        this.recoveredList.appendChild(this.DivElementArr[2]);
+        this.confirmedList.appendChild(this.DivElementArr.confirmedElement);
+        this.deathsList.appendChild(this.DivElementArr.deathsElement);
+        this.recoveredList.appendChild(this.DivElementArr.recoveredElement);
         TableComponent.addDataToNewDivElement(this.DivElementArr, this.globalDataCases);
     }
 
     static addDataToNewDivElement(arr, data) {
-        arr.forEach((item) => {
-            if (classListContains(item, 'table__sick')) setLastChildTextValue(item, `${data.Confirmed}`);
-            if (classListContains(item, 'table__death')) setLastChildTextValue(item, `${data.Deaths}`);
-            if (classListContains(item, 'table__get-well')) setLastChildTextValue(item, `${data.Recovered}`);
+        Object.keys(arr).forEach((key) => {
+            if (classListContains(arr[key], 'table__sick')) setLastChildTextValue(arr[key], `${data.Confirmed}`);
+            if (classListContains(arr[key], 'table__death')) setLastChildTextValue(arr[key], `${data.Deaths}`);
+            if (classListContains(arr[key], 'table__get-well')) setLastChildTextValue(arr[key], `${data.Recovered}`);
         });
     }
 }

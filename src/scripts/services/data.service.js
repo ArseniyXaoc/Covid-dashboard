@@ -1,4 +1,6 @@
-import { COVID_API_URL, ALL_COUNTRIES_SUMMARY_DATA, NO_DATA_TEXT } from '../constants/data-service.constants';
+import {
+    COVID_API_URL, ALL_COUNTRIES_SUMMARY_DATA, NO_DATA_TEXT, POPULATION_API_URL,
+} from '../constants/data-service.constants';
 
 export default class DataService {
     constructor() {
@@ -26,7 +28,7 @@ export default class DataService {
     // eslint-disable-next-line class-methods-use-this
     async getPopulationData() {
         try {
-            const response = await fetch('../../assets/all.json');
+            const response = await fetch(POPULATION_API_URL);
             const data = await response.json();
             return data;
         } catch (error) {

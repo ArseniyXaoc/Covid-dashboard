@@ -7,15 +7,15 @@ import {
     NEW_DATA_RECOVERED,
     CURRENT_DATA_GLOBAL,
     WORLD_POPULATION,
+    CASES_SELECT,
 } from '../../constants/table.constants';
 
-const calcuCasesPerOneHundredThousand = (data, population) => ((data / population) * 100000).toFixed(3);
+const calculateCasesPerOneHundredThousand = (data, population) => ((data / population) * 100000).toFixed(3);
 
 export default class TableDataServise {
     constructor() {
         this.globalDataCases = {};
-        this.mainText = document.querySelector('.switch__main-text');
-        this.prefixDataApi = {};
+        this.dataApiStateURL = {};
 
         this.diseaseTotalData = {
             confirmed: TOTAL_DATA_CONFIRMED,
@@ -30,52 +30,54 @@ export default class TableDataServise {
         };
     }
 
-    cashGlobalData(apiData, state = CURRENT_DATA_GLOBAL, dayOrTotal,
-        country, per100k, countryData) {
-        const globalCases = 'global';
-        const dayCases = 'total';
-
-        this.prefixDataApi = apiData[CURRENT_DATA_GLOBAL];
+    fetchGlobalData(
+        apiData,
+        state = CURRENT_DATA_GLOBAL,
+        dayOrTotal,
+        country,
+        per100k,
+        countryData,
+    ) {
+        this.dataApiStateURL = apiData[CURRENT_DATA_GLOBAL];
 
         if (country) {
-            this.prefixDataApi = apiData.Countries[country];
-            this.mainText.innerText = this.prefixDataApi.Country;
+            this.dataApiStateURL = apiData.Countries[country];
         }
 
-        if (state === globalCases) {
-            if (dayOrTotal === dayCases) {
+        if (state === CASES_SELECT.global) {
+            if (dayOrTotal === CASES_SELECT.day) {
                 if (per100k) {
-                    this.getStateAverage(this.prefixDataApi, this.diseaseTotalData, countryData);
+                    this.getStateAverage(this.dataApiStateURL, this.diseaseTotalData, countryData);
                 } else {
-                    this.getState(this.prefixDataApi, this.diseaseTotalData);
+                    this.getState(this.dataApiStateURL, this.diseaseTotalData);
                 }
             } else if (per100k) {
-                this.getStateAverage(this.prefixDataApi, this.diseaseNewData, countryData);
+                this.getStateAverage(this.dataApiStateURL, this.diseaseNewData, countryData);
             } else {
-                this.getState(this.prefixDataApi, this.diseaseNewData);
+                this.getState(this.dataApiStateURL, this.diseaseNewData);
             }
         }
 
         return this.globalDataCases;
     }
 
-    getState(prefixDataApi, diseaseTotalData) {
+    getState(dataApiStateURL, diseaseTotalData) {
         this.globalDataCases = {
-            Confirmed: prefixDataApi[diseaseTotalData.confirmed],
-            Deaths: prefixDataApi[diseaseTotalData.death],
-            Recovered: prefixDataApi[diseaseTotalData.recovered],
+            Confirmed: dataApiStateURL[diseaseTotalData.confirmed],
+            Deaths: dataApiStateURL[diseaseTotalData.death],
+            Recovered: dataApiStateURL[diseaseTotalData.recovered],
         };
     }
 
-    getStateAverage(prefixDataApi, diseaseTotalData, countryData) {
+    getStateAverage(dataApiStateURL, diseaseTotalData, countryData) {
         let population = WORLD_POPULATION;
-        if (prefixDataApi.Country) {
-            population = countryData.find((item) => item.name === prefixDataApi.Country).population;
+        if (dataApiStateURL.Country) {
+            population = countryData.find((item) => item.name === dataApiStateURL.Country).population;
         }
         this.globalDataCases = {
-            Confirmed: calcuCasesPerOneHundredThousand(prefixDataApi[diseaseTotalData.confirmed], population),
-            Deaths: calcuCasesPerOneHundredThousand(prefixDataApi[diseaseTotalData.death], population),
-            Recovered: calcuCasesPerOneHundredThousand(prefixDataApi[diseaseTotalData.recovered], population),
+            Confirmed: calculateCasesPerOneHundredThousand(dataApiStateURL[diseaseTotalData.confirmed], population),
+            Deaths: calculateCasesPerOneHundredThousand(dataApiStateURL[diseaseTotalData.death], population),
+            Recovered: calculateCasesPerOneHundredThousand(dataApiStateURL[diseaseTotalData.recovered], population),
         };
     }
 }
