@@ -19,8 +19,13 @@ export default class AppComponent {
     fetchAllData() {
         this.dataService.getAllCountriesSummaryData().then((data) => {
             this.allCountriesData = data;
-            this.globalCases.showContent(this.allCountriesData.Global, this.dataStates[0]);
+            this.globalCases.showContent(
+                this.allCountriesData.Global,
+                this.dataStates[0],
+                this.allCountriesData.Date,
+            );
             this.list.showContent(this.allCountriesData.Countries, this.dataStates[0]);
+            console.log(data);
         });
     }
 }
