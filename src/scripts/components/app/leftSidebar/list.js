@@ -9,15 +9,16 @@ export default class List {
     }
 
     createHTML() {
-        const listHeader = ElementsCreator.crateTextElement('h2', 'list_header', this.list);
+        const listHeader = ElementsCreator.crateElement('h2', 'list_header', this.list);
         listHeader.innerText = 'Cases by Country';
-        this.search = ElementsCreator.crateTextElement('input', 'search', this.list);
+        this.search = ElementsCreator.crateElement('input', 'search', this.list);
         this.search.placeholder = 'Enter the country';
         return Array(this.countryData.length).fill('').map(() => {
-            const block = ElementsCreator.createButton('item', this.list);
-            const casesSpan = ElementsCreator.crateTextElement('span', 'country_cases', block);
-            const nameSpan = ElementsCreator.crateTextElement('span', 'country', block);
-            const flagImg = ElementsCreator.crateImg('country_flag', 'flag', block);
+            const block = ElementsCreator.crateElement('button', 'country_container', this.list);
+            const casesSpan = ElementsCreator.crateElement('span', 'country_cases', block);
+            const nameSpan = ElementsCreator.crateElement('span', 'country', block);
+            const flagImg = ElementsCreator.crateElement('img', 'country_flag', block);
+            flagImg.alt = 'flag';
             return {
                 container: block,
                 flag: flagImg,
@@ -38,6 +39,10 @@ export default class List {
             this.countryContainers[item].name.innerText = `${element.Country} `;
             this.countryContainers[item].flag.src = `https://www.countryflags.io/${element.CountryCode}/flat/16.png`;
         });
+        this.addListener();
+    }
+
+    addListener() {
         this.search.addEventListener('keyup', () => this.onKeyup(this.search.value));
     }
 
@@ -45,9 +50,9 @@ export default class List {
         this.countryContainers.map((item) => {
             const country = item;
             if (!country.name.innerText.toLowerCase().startsWith(searchValue.toLowerCase())) {
-                country.container.style.display = 'none';
+                country.container.className = 'hidden_container';
             } else {
-                country.container.style.display = 'block';
+                country.container.className = 'country_container';
             }
             return this;
         });

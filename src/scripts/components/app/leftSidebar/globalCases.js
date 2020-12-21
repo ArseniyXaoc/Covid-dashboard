@@ -11,11 +11,11 @@ export default class GlobalCases {
     }
 
     createHTML() {
-        this.upDateSpan = ElementsCreator.crateTextElement('span', 'globalCases_upDate', this.globalCasesElement);
-        const globalCases = ElementsCreator.crateTextElement('h2', 'globalCases_header', this.globalCasesElement);
+        this.upDateSpan = ElementsCreator.crateElement('span', 'globalCases_upDate', this.globalCasesElement);
+        const globalCases = ElementsCreator.crateElement('h2', 'globalCases_header', this.globalCasesElement);
         globalCases.innerText = 'Global cases';
-        this.valueSpan = ElementsCreator.crateTextElement('span', 'globalCases_value', this.globalCasesElement);
-        this.stateSpan = ElementsCreator.crateTextElement('span', 'globalCases_state', this.globalCasesElement);
+        this.valueSpan = ElementsCreator.crateElement('span', 'globalCases_value', this.globalCasesElement);
+        this.stateSpan = ElementsCreator.crateElement('span', 'globalCases_state', this.globalCasesElement);
     }
 
     showContent(data, state, date) {

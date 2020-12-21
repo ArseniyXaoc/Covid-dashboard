@@ -26,11 +26,13 @@ export default class AppComponent {
                 this.allCountriesData.Date,
             );
             this.list.showContent(this.allCountriesData.Countries, this.dataStates[0]);
-            this.list.countryContainers.forEach((country) => country.container.addEventListener('click', () => {
-                this.activatedCountry = country.name.innerText;
-                // there should be a function that takes the name of the country
-                console.log(country.name.innerText);
-            }));
+            this.runCountruButtonListener();
         });
+    }
+
+    runCountruButtonListener() {
+        this.list.countryContainers.forEach((country) => country.container.addEventListener('click', () => {
+            this.activatedCountry = country.name.innerText;
+        }));
     }
 }
