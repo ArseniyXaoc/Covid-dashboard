@@ -1,5 +1,4 @@
 import '../styles/index.scss';
-import '../styles/table.scss';
 import AppComponent from './components/app/AppComponent';
 import DataService from './services/data.service';
 

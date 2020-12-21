@@ -7,12 +7,12 @@ export default class AppComponent {
     constructor(dataService) {
         this.dataService = dataService;
         this.allCountriesData = {};
-        this.allCountriesPopulationData = {};
-        this.fetchPopulationData();
+        this.allCountriesPopData = {};
         this.fetchAllData();
         this.dataStates = ['NewConfirmed', 'NewDeaths', 'NewRecovered'];
         this.globalCases = new GlobalCases();
         this.list = new List();
+        this.table = new TableComponent();
         this.chart = new ChartComponent();
     }
 
@@ -26,14 +26,13 @@ export default class AppComponent {
             this.allCountriesData = data;
             this.globalCases.showContent(this.allCountriesData.Global, this.dataStates[0]);
             this.list.showContent(this.allCountriesData.Countries, this.dataStates[0]);
-            this.table = new TableComponent(this.allCountriesData);
+            this.table.updateData(this.allCountriesData);
+            // this.table = new TableComponent(this.allCountriesData);
         });
-    }
-
-    fetchPopulationData() {
         this.dataService.getAllCountriesPopulationData().then((data) => {
-            this.allCountriesPopulationData = data;
-            TableComponent.coutryPopulationData = this.allCountriesPopulationData;
+            this.allCountriesPopData = data;
+            this.table.updatePopulationData(this.allCountriesPopData);
+            // this.table.coutryPopulationData = this.allCountriesPopData;
         });
     }
 }

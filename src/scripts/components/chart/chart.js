@@ -12,7 +12,7 @@ import {
     createNewDivElement,
     addFieldToDivElement,
     clearData,
-} from '../table/table.htmlUtils';
+} from '../../utils/table.htmlUtils';
 
 export default class ChartComponent {
     constructor() {
@@ -22,7 +22,7 @@ export default class ChartComponent {
         this.chartData = {};
         this.ctx = null;
         this.chart = null;
-        this.currentCountry = '';
+        this.currentCountry = 'India';
         this.getData(this.currentCountry);
         this.ctx = this.Canvas.getContext('2d');
         this.createChart();
