@@ -4,18 +4,22 @@ export default class GlobalCases {
     constructor() {
         this.allCountriesData = [];
         this.globalCasesElement = document.querySelector('.globalCases');
-        this.stateSpan = undefined;
-        this.valueSpan = undefined;
+        this.upDateSpan = {};
+        this.stateSpan = {};
+        this.valueSpan = {};
         this.createHTML();
     }
 
     createHTML() {
-        ElementsCreator.crateTextElement('h2', 'globalCases_header', 'Global cases', this.globalCasesElement);
-        this.valueSpan = ElementsCreator.crateTextElement('span', 'globalCases_value', '', this.globalCasesElement);
-        this.stateSpan = ElementsCreator.crateTextElement('span', 'globalCases_state', '', this.globalCasesElement);
+        this.upDateSpan = ElementsCreator.crateElement('span', 'globalCases_upDate', this.globalCasesElement);
+        const globalCases = ElementsCreator.crateElement('h2', 'globalCases_header', this.globalCasesElement);
+        globalCases.innerText = 'Global cases';
+        this.valueSpan = ElementsCreator.crateElement('span', 'globalCases_value', this.globalCasesElement);
+        this.stateSpan = ElementsCreator.crateElement('span', 'globalCases_state', this.globalCasesElement);
     }
 
-    showContent(data, state) {
+    showContent(data, state, date) {
+        this.upDateSpan.innerText = `updated ${date}`;
         this.allCountriesData = data;
         const stateBody = state.split('New').join('');
         const newCases = state;

@@ -6,13 +6,23 @@
     flex-direction: column;
     justify-content: center;
 
+    .globalCases_upDate {
+        font-size: 0.8vw;
+        text-align: right;
+        padding: 0 10px 0 0;
+    }
+
     .globalCases_header {
-        font-size: 1.05em;
+        font-size: 2vw;
         padding: 0.3em;
     }
 
     .globalCases_value {
-        font-size: 1em;
+        font-size: 2vw;
         color: $base-violet-color;
+    }
+
+    .globalCases_state {
+        font-size: 1.1vw;
     }
 }

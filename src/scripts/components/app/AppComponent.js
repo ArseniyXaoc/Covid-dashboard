@@ -12,6 +12,7 @@ export default class AppComponent {
         this.dataStates = ['NewConfirmed', 'NewDeaths', 'NewRecovered'];
         this.globalCases = new GlobalCases();
         this.list = new List();
+        this.activatedCountry = '';
         this.table = new TableComponent();
         this.chart = new ChartComponent();
     }
@@ -24,8 +25,13 @@ export default class AppComponent {
     fetchAllData() {
         this.dataService.getAllCountriesSummaryData().then((data) => {
             this.allCountriesData = data;
-            this.globalCases.showContent(this.allCountriesData.Global, this.dataStates[0]);
+            this.globalCases.showContent(
+                this.allCountriesData.Global,
+                this.dataStates[0],
+                this.allCountriesData.Date,
+            );
             this.list.showContent(this.allCountriesData.Countries, this.dataStates[0]);
+            this.runCountruButtonListener();
             this.table.updateData(this.allCountriesData);
             // this.table = new TableComponent(this.allCountriesData);
         });
@@ -34,5 +40,11 @@ export default class AppComponent {
             this.table.updatePopulationData(this.allCountriesPopData);
             // this.table.coutryPopulationData = this.allCountriesPopData;
         });
+    }
+
+    runCountruButtonListener() {
+        this.list.countryContainers.forEach((country) => country.container.addEventListener('click', () => {
+            this.activatedCountry = country.name.innerText;
+        }));
     }
 }
