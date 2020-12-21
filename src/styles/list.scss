@@ -20,9 +20,21 @@
     }
 
     .item {
+        outline: none;
+        background-color: inherit;
+        border: none;
         padding: 0.5em;
         border-bottom: 1px solid $secondary-text-color;
         text-align: left;
+        transition: .3s;
+
+        &:hover {
+            background-color: $dark-violet-background;
+        }
+
+        &:active {
+            background-color: $violet_background;
+        }
 
         .country_cases {
             color: $base-violet-color;

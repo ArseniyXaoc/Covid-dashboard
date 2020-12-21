@@ -9,6 +9,7 @@ export default class AppComponent {
         this.dataStates = ['NewConfirmed', 'NewDeaths', 'NewRecovered'];
         this.globalCases = new GlobalCases();
         this.list = new List();
+        this.activatedCountry = '';
     }
 
     // eslint-disable-next-line class-methods-use-this
@@ -25,6 +26,11 @@ export default class AppComponent {
                 this.allCountriesData.Date,
             );
             this.list.showContent(this.allCountriesData.Countries, this.dataStates[0]);
+            this.list.countryContainers.forEach((country) => country.container.addEventListener('click', () => {
+                this.activatedCountry = country.name.innerText;
+                // there should be a function that takes the name of the country
+                console.log(country.name.innerText);
+            }));
         });
     }
 }

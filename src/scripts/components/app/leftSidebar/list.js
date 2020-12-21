@@ -14,7 +14,7 @@ export default class List {
         this.search = ElementsCreator.crateTextElement('input', 'search', this.list);
         this.search.placeholder = 'Enter the country';
         return Array(this.countryData.length).fill('').map(() => {
-            const block = ElementsCreator.createBlock('item', this.list);
+            const block = ElementsCreator.createButton('item', this.list);
             const casesSpan = ElementsCreator.crateTextElement('span', 'country_cases', block);
             const nameSpan = ElementsCreator.crateTextElement('span', 'country', block);
             const flagImg = ElementsCreator.crateImg('country_flag', 'flag', block);

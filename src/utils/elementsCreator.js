@@ -6,6 +6,13 @@ export default class ElementsCreator {
         return block;
     }
 
+    static createButton(className, parent) {
+        const block = document.createElement('button');
+        block.className = className;
+        parent.append(block);
+        return block;
+    }
+
     static crateTextElement(elementType, className, parent) {
         const element = document.createElement(elementType);
         element.className = className;
