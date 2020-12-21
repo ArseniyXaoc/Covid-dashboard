@@ -25,7 +25,6 @@ export default class AppComponent {
                 this.allCountriesData.Date,
             );
             this.list.showContent(this.allCountriesData.Countries, this.dataStates[0]);
-            console.log(data);
         });
     }
 }
