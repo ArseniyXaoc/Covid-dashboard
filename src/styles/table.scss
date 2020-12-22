@@ -15,6 +15,9 @@
         cursor: pointer;
         background-color: $light-gray-background;
     }
+    span {
+        font-size: 2vw;
+    }
 }
 
 .table__get-well{
@@ -52,7 +55,7 @@
     }
 
     &__main-text {
-        font-size: 24px;
+        font-size: 2vw;
     }
 }
 
@@ -102,7 +105,7 @@
 }
 
 .Table__List-data-text {
-    font-size: 18px;
+    font-size: 2vw;
 }
 
 .table__indicators-wrap{
