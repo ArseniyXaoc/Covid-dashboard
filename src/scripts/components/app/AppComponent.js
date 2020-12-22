@@ -15,6 +15,8 @@ export default class AppComponent {
         this.activatedCountry = '';
         this.table = new TableComponent();
         this.chart = new ChartComponent();
+        this.activeState = '';
+        this.cachingInProgress = 'Caching in progress';
     }
 
     // eslint-disable-next-line class-methods-use-this
@@ -24,6 +26,9 @@ export default class AppComponent {
 
     fetchAllData() {
         this.dataService.getAllCountriesSummaryData().then((data) => {
+            if (data.Message === this.cachingInProgress) {
+                throw Error(this.cachingInProgress);
+            }
             this.allCountriesData = data;
             this.globalCases.showContent(
                 this.allCountriesData.Global,
@@ -45,6 +50,17 @@ export default class AppComponent {
     runCountruButtonListener() {
         this.list.countryContainers.forEach((country) => country.container.addEventListener('click', () => {
             this.activatedCountry = country.name.innerText;
+            this.table.changeCountry(this.activatedCountry.trim());
+            this.chart.changeCountry(this.activatedCountry.trim());
         }));
+        this.chart.confirmedButton.addEventListener('click', () => {
+            this.activeState = this.chart.labelConfermed;
+        });
+        this.chart.deathButton.addEventListener('click', () => {
+            this.activeState = this.chart.labelDeath;
+        });
+        this.chart.recoveredButton.addEventListener('click', () => {
+            this.activeState = this.chart.labelRecovered;
+        });
     }
 }

@@ -6,12 +6,16 @@
 }
 
 .table__sick, .table__death, .table__get-well{
-    height: 100%;
+    height: 14%;
     width: 33.33%;
     margin-right: 5px;
     background: $violet_background;
     display: flex;
     flex-direction: column;
+    &:hover{
+        cursor: pointer;
+        background-color: $light-gray-background;
+    }
 }
 
 .table__get-well{
@@ -96,4 +100,8 @@
 
 .selected {
     color: $base-violet-color;
+}
+
+.Table__List-data-text {
+    font-size: 18px;
 }

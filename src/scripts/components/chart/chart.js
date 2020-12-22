@@ -1,8 +1,11 @@
 import Chart from 'chart.js';
 import ElementCreaton from './elementCreation';
-import ChartDataServise from './chart.data-service';
+import ChartDataServise from '../../services/chart.data-service';
 import AppComponent from '../app/AppComponent';
-import { GLOBAL_TIMELINE, COUNTRY_TIMELINE } from '../../constants/chart.constants';
+import {
+    GLOBAL_TIMELINE,
+    COUNTRY_TIMELINE,
+} from '../../constants/chart.constants';
 import {
     querySelector,
     createElement,
@@ -16,39 +19,46 @@ import {
 
 export default class ChartComponent {
     constructor() {
-        this.DataServise = new ChartDataServise();
+        this.chartDataService = new ChartDataServise();
         this.chartWrapper = querySelector('.chart');
         this.Canvas = ElementCreaton.createBlock('canvas', 'myChart', this.chartWrapper);
         this.chartData = {};
-        this.ctx = null;
         this.chart = null;
-        this.currentCountry = 'India';
+        this.currentCountry = '';
         this.getData(this.currentCountry);
         this.ctx = this.Canvas.getContext('2d');
         this.createChart();
         this.labelConfermed = 'Confermed';
         this.labelDeath = 'Death';
         this.labelRecovered = 'Recovered';
+        this.confirmedButton = querySelector('.table__sick');
+        this.deathButton = querySelector('.table__death');
+        this.recoveredButton = querySelector('.table__get-well');
+    }
+
+    changeCountry(country) {
+        this.currentCountry = country;
+        this.getData(country);
     }
 
     eventListeners(chartData) {
-        const confirmedButton = querySelector('.table__sick');
-        const deathButton = querySelector('.table__death');
-        const recoveredButton = querySelector('.table__get-well');
-        confirmedButton.addEventListener('click', () => {
-            this.updateChartData(chartData.Confermed, null, this.labelConfermed);
+        this.confirmedButton.addEventListener('click', () => {
+            this.updateChartData(chartData.confermed, null, this.labelConfermed);
         });
-        deathButton.addEventListener('click', () => {
-            this.updateChartData(chartData.Death, null, this.labelDeath);
+        this.deathButton.addEventListener('click', () => {
+            this.updateChartData(chartData.death, null, this.labelDeath);
         });
-        recoveredButton.addEventListener('click', () => {
-            this.updateChartData(chartData.Recovered, null, this.labelRecovered);
+        this.recoveredButton.addEventListener('click', () => {
+            this.updateChartData(chartData.recovered, null, this.labelRecovered);
         });
     }
 
     getData(Country) {
-        if (Country === '') this.getTotalCountryData(GLOBAL_TIMELINE, '');
-        else this.getTotalCountryData(COUNTRY_TIMELINE, Country);
+        if (Country === '') {
+            this.getTotalCountryData(GLOBAL_TIMELINE, '');
+        } else {
+            this.getTotalCountryData(COUNTRY_TIMELINE, Country);
+        }
     }
 
     updateChartData(data, date, label) {
@@ -83,15 +93,14 @@ export default class ChartComponent {
     }
 
     getTotalCountryData(timeline, country) {
-        this.DataServise.getCurrentCountryData(timeline, country).then((data) => {
+        this.chartDataService.getCurrentCountryData(timeline, country).then((data) => {
             let chartData;
             if (this.currentCountry === '') {
-                chartData = this.DataServise.parseDataGlobalArray(data);
+                chartData = this.chartDataService.parseDataGlobalArray(data);
             } else {
-                chartData = this.DataServise.parseDataCityArray(data);
+                chartData = this.chartDataService.parseDataCityArray(data);
             }
-            console.log(chartData);
-            this.updateChartData(chartData.Death, chartData.Date, this.labelConfermed);
+            this.updateChartData(chartData.death, chartData.date, this.labelConfermed);
             this.eventListeners(chartData);
         });
     }

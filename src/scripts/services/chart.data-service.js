@@ -23,34 +23,33 @@ export default class ChartDataServise {
     }
 
     parseDataCityArray(data) {
-        const Date = data.map((item) => item.Date.slice(0, 10));
-        const Confermed = data.map((item) => item.Confirmed);
-        const Death = data.map((item) => item.Deaths);
-        const Recovered = data.map((item) => item.Recovered);
+        const date = data.map((item) => item.Date.slice(0, 10));
+        const confermed = data.map((item) => item.Confirmed);
+        const death = data.map((item) => item.Deaths);
+        const recovered = data.map((item) => item.Recovered);
         this.dataArray = {
-            Date,
-            Confermed,
-            Death,
-            Recovered,
+            date,
+            confermed,
+            death,
+            recovered,
         };
         return (this.dataArray);
     }
 
     parseDataGlobalArray(data) {
-        console.log(data);
-        const Date = data.map((item) => item.last_update.slice(0, 10));
-        Date.reverse();
-        const Confermed = data.map((item) => item.total_cases);
-        Confermed.reverse();
-        const Death = data.map((item) => item.total_deaths);
-        Death.reverse();
-        const Recovered = data.map((item) => item.total_recovered);
-        Recovered.reverse();
+        const date = data.map((item) => item.last_update.slice(0, 10));
+        date.reverse();
+        const confermed = data.map((item) => item.total_cases);
+        confermed.reverse();
+        const death = data.map((item) => item.total_deaths);
+        death.reverse();
+        const recovered = data.map((item) => item.total_recovered);
+        recovered.reverse();
         this.dataArray = {
-            Date,
-            Confermed,
-            Death,
-            Recovered,
+            date,
+            confermed,
+            death,
+            recovered,
         };
         return (this.dataArray);
     }

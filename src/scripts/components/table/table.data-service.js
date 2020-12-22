@@ -41,7 +41,7 @@ export default class TableDataServise {
         this.dataApiStateURL = apiData[CURRENT_DATA_GLOBAL];
 
         if (country) {
-            this.dataApiStateURL = apiData.Countries[country];
+            this.dataApiStateURL = apiData.Countries.find((item) => item.Country === country);
         }
 
         if (state === CASES_SELECT.global) {
