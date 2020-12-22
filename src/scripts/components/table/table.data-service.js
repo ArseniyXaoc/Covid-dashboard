@@ -72,7 +72,11 @@ export default class TableDataServise {
     getStateAverage(dataApiStateURL, diseaseTotalData, countryData) {
         let population = WORLD_POPULATION;
         if (dataApiStateURL.Country) {
-            population = countryData.find((item) => item.name === dataApiStateURL.Country).population;
+            if (dataApiStateURL.Country === 'United Kingdom') {
+                population = 65110000;
+            } else {
+                population = countryData.find((item) => item.name === dataApiStateURL.Country).population
+            }
         }
         this.globalDataCases = {
             Confirmed: calculateCasesPerOneHundredThousand(dataApiStateURL[diseaseTotalData.confirmed], population),
