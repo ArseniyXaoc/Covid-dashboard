@@ -31,8 +31,7 @@ export default class AppComponent {
                 this.allCountriesData.Date,
             );
             this.list.showContent(this.allCountriesData.Countries, this.dataStates[0]);
-            this.runCountruButtonListener();
-            this.map.createMap(this.allCountriesData.Countries, this.dataStates[0]);
+            this.updateMapData();
             this.table.updateData(this.allCountriesData);
             // this.table = new TableComponent(this.allCountriesData);
         });
@@ -43,9 +42,20 @@ export default class AppComponent {
         });
     }
 
-    runCountruButtonListener() {
+    runCountryButtonListener() {
         this.list.countryContainers.forEach((country) => country.container.addEventListener('click', () => {
             this.activatedCountry = country.name.innerText;
         }));
+    }
+
+    updateMapData() {
+        this.map.updateMapData(this.allCountriesData.Countries, this.dataStates[0], this.activatedCountry);
+        this.map.countryMarkers.forEach(marker => {
+            marker.on('click', this.addActiveCountryFromMap.bind(this));
+        });
+    }
+
+    addActiveCountryFromMap(event) {
+        this.activatedCountry = event.target.options.country;
     }
 }
