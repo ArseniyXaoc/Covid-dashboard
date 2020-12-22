@@ -14,7 +14,7 @@ export default class TableComponent {
         this.tableDataServise = new TableDataServise();
         this.countryPopulation = {};
         this.fetchSetAPIData = {};
-        this.currentCountry = 0;
+        this.currentCountry = '';
         this.confirmedList = querySelector('.table__sick');
         this.deathsList = querySelector('.table__death');
         this.recoveredList = querySelector('.table__get-well');
@@ -41,8 +41,17 @@ export default class TableComponent {
 
     updateData(fetchData) {
         this.fetchSetAPIData = fetchData;
+        // this.setAllCountries();
         this.dataProcessing();
         this.renderData();
+    }
+
+    setAllCountries() {
+        this.fetchSetAPIData.Countries.forEach((item) => {
+            this.currentCountry = item.Country;
+            this.dataProcessing();
+            this.renderData();
+        });
     }
 
     updatePopulationData(fetchData) {
@@ -53,6 +62,13 @@ export default class TableComponent {
     hendlerEventCheckbox() {
         this.switchTotalOrDay.addEventListener('change', (event) => this.changeSetData.call(this, event));
         this.globalOr100k.addEventListener('change', (event) => this.changeSetData.call(this, event));
+    }
+
+    changeCountry(Country) {
+        this.currentCountry = Country;
+        clearData(this.DivElementArr);
+        this.dataProcessing();
+        this.renderData();
     }
 
     changeSetData(event) {
@@ -82,9 +98,29 @@ export default class TableComponent {
 
     static addDataToNewDivElement(arr, data) {
         Object.keys(arr).forEach((key) => {
-            if (classListContains(arr[key], 'table__sick')) setLastChildTextValue(arr[key], `${data.Confirmed}`);
-            if (classListContains(arr[key], 'table__death')) setLastChildTextValue(arr[key], `${data.Deaths}`);
-            if (classListContains(arr[key], 'table__get-well')) setLastChildTextValue(arr[key], `${data.Recovered}`);
+            if (classListContains(arr[key], 'table__sick')) setLastChildTextValue(arr[key], `${data.Confirmed}\n`);
+            if (classListContains(arr[key], 'table__death')) setLastChildTextValue(arr[key], `${data.Deaths}\n`);
+            if (classListContains(arr[key], 'table__get-well')) setLastChildTextValue(arr[key], `${data.Recovered}\n`);
         });
     }
+
+    // Object.keys(arr).forEach((key) => {
+
+    //     if (classListContains(arr[key], 'table__sick')) {
+    //         const div = createElement('div');
+    //         div.innerText = `${data.Confirmed}`;
+    //         arr[key].appendChild(div);
+    //     }
+
+    //     if (classListContains(arr[key], 'table__death')) {
+    //         const div = createElement('div');
+    //         div.innerText = `${data.Deaths}`;
+    //         arr[key].appendChild(div);
+    //     }
+
+    //     if (classListContains(arr[key], 'table__get-well')) {
+    //         const div = createElement('div');
+    //         div.innerText = `${data.Recovered}`;
+    //         arr[key].appendChild(div);
+    //     }
 }
