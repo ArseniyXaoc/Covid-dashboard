@@ -7,6 +7,7 @@ export default class Map {
         this.map = {};
         this.mapCondition = '';
         this.popapDescription = '';
+        this.clickedContry = '';
     }
 
     getCoordinates() {
@@ -36,7 +37,9 @@ export default class Map {
             radius: country[this.mapCondition] / 10,
         })
             .addTo(this.map)
-            .bindPopup(`${country.Country} ${country[this.mapCondition]} ${this.popapDescription}`)
-            .openPopup();
+            .bindPopup(`<button class="popap" id=${country.Country}>
+                ${country.Country} ${country[this.mapCondition]} ${this.popapDescription}
+            </button>`)
+            .on('click', function() {console.log(country.Country)});
     }
 }

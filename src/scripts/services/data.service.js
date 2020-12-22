@@ -9,8 +9,8 @@ export default class DataService {
     // eslint-disable-next-line class-methods-use-this
     async getData(dataRequest) {
         try {
-            const response = await fetch(`${COVID_API_URL}${dataRequest}`);
-            const data = await response.json();
+            // const response = await fetch(`${COVID_API_URL}${dataRequest}`);
+            const data = require('../../../summary.json') // await response.json();
             return data;
         } catch (error) {
             throw new Error(NO_DATA_TEXT);
