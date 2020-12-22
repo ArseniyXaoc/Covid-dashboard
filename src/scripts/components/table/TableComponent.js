@@ -8,6 +8,7 @@ import {
     setLastChildTextValue, toggleCheckedState,
     createTableColumn, addFieldToDivElement, clearData,
 } from '../../utils/table.htmlUtils';
+import ElementCreaton from '../chart/elementCreation';
 
 export default class TableComponent {
     constructor() {
@@ -19,6 +20,11 @@ export default class TableComponent {
         this.deathsList = querySelector('.table__death');
         this.recoveredList = querySelector('.table__get-well');
         this.titleElement = querySelector('.switch__main-text');
+        this.tableIndicator = querySelector('.table__indicators');
+        this.allCountry = querySelector('.table__country');
+        this.allCountrySick = querySelector('.table__country-sick');
+        this.allCountryDeath = querySelector('.table__country-death');
+        this.allCountryWell = querySelector('.table__countryget-well');
         this.activeState = tableStates.total;
         this.switchTotalOrDay = querySelector('.amount-checkbox');
         this.globalOr100k = querySelector('.indicator-checkbox');
@@ -41,16 +47,18 @@ export default class TableComponent {
 
     updateData(fetchData) {
         this.fetchSetAPIData = fetchData;
-        // this.setAllCountries();
         this.dataProcessing();
         this.renderData();
+        this.setAllCountries();
     }
 
     setAllCountries() {
         this.fetchSetAPIData.Countries.forEach((item) => {
-            this.currentCountry = item.Country;
-            this.dataProcessing();
-            this.renderData();
+            const country = item.Country;
+            const confirmed = item.TotalConfirmed;
+            const death = item.TotalDeaths;
+            const recovered = item.TotalRecovered;
+            this.addAllDataCountry(country, confirmed, death, recovered);
         });
     }
 
@@ -104,23 +112,19 @@ export default class TableComponent {
         });
     }
 
-    // Object.keys(arr).forEach((key) => {
-
-    //     if (classListContains(arr[key], 'table__sick')) {
-    //         const div = createElement('div');
-    //         div.innerText = `${data.Confirmed}`;
-    //         arr[key].appendChild(div);
-    //     }
-
-    //     if (classListContains(arr[key], 'table__death')) {
-    //         const div = createElement('div');
-    //         div.innerText = `${data.Deaths}`;
-    //         arr[key].appendChild(div);
-    //     }
-
-    //     if (classListContains(arr[key], 'table__get-well')) {
-    //         const div = createElement('div');
-    //         div.innerText = `${data.Recovered}`;
-    //         arr[key].appendChild(div);
-    //     }
+    // eslint-disable-next-line class-methods-use-this
+    addAllDataCountry(country, confirmed, death, recovered) {
+        const allCountry = ElementCreaton.createBlock('div', 'table_list-country', this.allCountry);
+        allCountry.innerText = country;
+        const allConfirmed = ElementCreaton.createBlock('div', 'table_list-country', this.allCountrySick);
+        allConfirmed.innerText = confirmed;
+        const allDeath = ElementCreaton.createBlock('div', 'table_list-country', this.allCountryDeath);
+        allDeath.innerText = death;
+        const allRecovered = ElementCreaton.createBlock('div', 'table_list-country', this.allCountryWell);
+        allRecovered.innerText = recovered;
+        // this.allCountry 
+        // this.allCountrySick
+        // this.allCountryDeath
+        // this.allCountryWell
+    }
 }
