@@ -18,12 +18,10 @@
   },
   "homepage": "https://github.com/ArseniyXaoc/Covid-dashboard#readme",
   "dependencies": {
-    "-": "0.0.1",
     "@babel/core": "^7.12.9",
     "babel-loader": "^8.2.2",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-import": "^2.22.1",
-    "g": "^2.0.1",
     "leaflet": "^1.7.1",
     "style-loader": "^2.0.0",
     "webpack": "^5.10.0",
