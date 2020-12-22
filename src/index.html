@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Covid-dashboard-2020</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css">
 </head>
 
 <body>
@@ -14,10 +15,10 @@
             <section class="list"></section>
         </section>
         <section class="center-section">
-            <section class="map">Map</section>
+            <section class="map" id="map">Map</section>
         </div>
         <div class="right-sidebar">
-            
+
         </section>
         <section class="right-sidebar">
             <section class="table">
@@ -28,7 +29,7 @@
                             <label class="switch__label" for="amount-checkbox"></label>
                         </div>
                         <div>
-                            <span class="global selected">Global</span> /<span class="per-one-hundred">100k population</span> 
+                            <span class="global selected">Global</span> /<span class="per-one-hundred">100k population</span>
                             <input class="switch__input indicator-checkbox" type="checkbox" id="indicator-checkbox" />
                             <label class="switch__label" for="indicator-checkbox"></label>
                         </div>
