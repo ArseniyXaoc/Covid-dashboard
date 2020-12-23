@@ -16,7 +16,7 @@ module.exports = {
         compress: true,
         inline: true,
         hot: true,
-        port: 3000,
+        port: 4200,
         watchContentBase: true,
     },
     plugins: [
