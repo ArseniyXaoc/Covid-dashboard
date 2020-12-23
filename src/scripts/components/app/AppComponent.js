@@ -1,6 +1,7 @@
 import TableComponent from '../table/TableComponent';
 import List from './leftSidebar/list';
 import GlobalCases from './leftSidebar/globalCases';
+import Map from './map/map';
 import ChartComponent from '../chart/chart';
 
 export default class AppComponent {
@@ -9,11 +10,12 @@ export default class AppComponent {
         this.allCountriesData = {};
         this.allCountriesPopData = {};
         this.fetchAllData();
-        this.dataStates = ['NewConfirmed', 'NewDeaths', 'NewRecovered'];
+        this.dataStates = ['TotalConfirmed', 'TotalDeaths', 'TotalRecovered'];
         this.globalCases = new GlobalCases();
         this.list = new List();
         this.activatedCountry = '';
         this.table = new TableComponent();
+        this.map = new Map();
         this.chart = new ChartComponent();
         this.activeState = '';
         this.cachingInProgress = 'Caching in progress';
@@ -36,7 +38,8 @@ export default class AppComponent {
                 this.allCountriesData.Date,
             );
             this.list.showContent(this.allCountriesData.Countries, this.dataStates[0]);
-            this.runCountruButtonListener();
+            this.runCountryButtonListener();
+            this.updateMapData();
             this.table.updateData(this.allCountriesData);
             // this.table = new TableComponent(this.allCountriesData);
         });
@@ -47,9 +50,14 @@ export default class AppComponent {
         });
     }
 
-    runCountruButtonListener() {
+    runCountryButtonListener() {
         this.list.countryContainers.forEach((country) => country.container.addEventListener('click', () => {
-            this.activatedCountry = country.name.innerText;
+            if (this.activatedCountry !== country.name.innerText) {
+                this.activatedCountry = country.name.innerText;
+            } else {
+                this.activatedCountry = '';
+            }
+            this.list.setActivatedCountry(this.activatedCountry, country.container);
             this.table.changeCountry(this.activatedCountry.trim());
             this.chart.changeCountry(this.activatedCountry.trim());
         }));
@@ -62,5 +70,16 @@ export default class AppComponent {
         this.chart.recoveredButton.addEventListener('click', () => {
             this.activeState = this.chart.labelRecovered;
         });
+    }
+
+    updateMapData() {
+        this.map.updateMapData(this.allCountriesData.Countries, this.dataStates[0], this.activatedCountry);
+        this.map.countryMarkers.forEach((marker) => {
+            marker.on('click', this.addActiveCountryFromMap.bind(this));
+        });
+    }
+
+    addActiveCountryFromMap(event) {
+        this.activatedCountry = event.target.options.country;
     }
 }

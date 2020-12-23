@@ -1,6 +1,8 @@
 @import './valiables';
 @import './list.scss';
 @import './globalCases';
+@import './map.scss';
+@import '~leaflet/dist/leaflet.css';
 
 * {
     margin: 0;

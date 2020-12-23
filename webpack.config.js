@@ -8,6 +8,7 @@ module.exports = {
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: '[name].js',
+        publicPath: '',
     },
     devtool: 'cheap-module-source-map',
     devServer: {
@@ -37,12 +38,19 @@ module.exports = {
                 },
             },
             {
-                test: /\.s[ac]ss$/i,
+                test: /\.(sa|sc|c)ss$/,
                 use: [
                     MiniCssExtractPlugin.loader,
                     'css-loader',
                     'sass-loader',
                 ],
+            },
+            {
+                test: /\.(png|woff|woff2|eot|ttf|svg)$/,
+                loader: 'file-loader',
+                options: {
+                    name: './fonts/[name].[ext]',
+                },
             },
         ],
     },

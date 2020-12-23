@@ -21,8 +21,8 @@ export default class GlobalCases {
     showContent(data, state, date) {
         this.upDateSpan.innerText = `updated ${date}`;
         this.allCountriesData = data;
-        const stateBody = state.split('New').join('');
-        const newCases = state;
+        const stateBody = state.split('Total').join('');
+        const newCases = 'New'.concat(stateBody);
         const totalCases = 'Total'.concat(stateBody);
         this.valueSpan.innerText = `${this.allCountriesData[newCases]} / ${this.allCountriesData[totalCases]}`;
         this.stateSpan.innerText = `new ${stateBody.toLowerCase()} / total ${stateBody.toLowerCase()}`;

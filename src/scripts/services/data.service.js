@@ -1,17 +1,16 @@
 import {
-    COVID_API_URL, ALL_COUNTRIES_SUMMARY_DATA, NO_DATA_TEXT, POPULATION_API_URL,
+    ALL_COUNTRIES_SUMMARY_DATA,
+    COVID_API_URL,
+    NO_DATA_TEXT,
+    POPULATION_API_URL,
 } from '../constants/data-service.constants';
 
 export default class DataService {
-    constructor() {
-    }
-
     // eslint-disable-next-line class-methods-use-this
     async getData(dataRequest) {
         try {
-            const response = await fetch(`${COVID_API_URL}${dataRequest}`);
-            const data = await response.json();
-            return data;
+            const data = await fetch(`${COVID_API_URL}${dataRequest}`);
+            return await data.json();
         } catch (error) {
             throw new Error(NO_DATA_TEXT);
         }
