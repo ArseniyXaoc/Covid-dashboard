@@ -43,6 +43,7 @@ export default class TableComponent {
         );
         this.currentCountryName = this.tableDataServise.dataApiStateURL.Country;
         if (this.currentCountryName) this.titleElement.innerText = this.currentCountryName;
+        else this.titleElement.innerText = 'Global';
     }
 
     updateData(fetchData) {
@@ -122,9 +123,5 @@ export default class TableComponent {
         allDeath.innerText = death;
         const allRecovered = ElementCreaton.createBlock('div', 'table_list-country', this.allCountryWell);
         allRecovered.innerText = recovered;
-        // this.allCountry 
-        // this.allCountrySick
-        // this.allCountryDeath
-        // this.allCountryWell
     }
 }

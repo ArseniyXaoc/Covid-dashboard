@@ -34,12 +34,11 @@ export default class AppComponent {
             this.updateGlobalAndListAndMapData();
             this.runCountryButtonListener();
             this.table.updateData(this.allCountriesData);
-            // this.table = new TableComponent(this.allCountriesData);
         });
         this.dataService.getAllCountriesPopulationData().then((data) => {
             this.allCountriesPopData = data;
             this.table.updatePopulationData(this.allCountriesPopData);
-            // this.table.coutryPopulationData = this.allCountriesPopData;
+            this.chart.updatePopulationData(this.allCountriesPopData);
         });
     }
 

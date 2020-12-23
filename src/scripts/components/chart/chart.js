@@ -1,20 +1,14 @@
 import Chart from 'chart.js';
 import ElementCreaton from './elementCreation';
 import ChartDataServise from '../../services/chart.data-service';
-import AppComponent from '../app/AppComponent';
 import {
     GLOBAL_TIMELINE,
     COUNTRY_TIMELINE,
+    WORLD_POPULATION,
 } from '../../constants/chart.constants';
 import {
     querySelector,
-    createElement,
-    classListContains,
-    setLastChildTextValue,
-    toggleColorCheckedElement,
-    createNewDivElement,
-    addFieldToDivElement,
-    clearData,
+
 } from '../../utils/table.htmlUtils';
 
 export default class ChartComponent {
@@ -34,6 +28,15 @@ export default class ChartComponent {
         this.confirmedButton = querySelector('.table__sick');
         this.deathButton = querySelector('.table__death');
         this.recoveredButton = querySelector('.table__get-well');
+        this.checkboxOneDay = querySelector('.amount-checkbox');
+        this.checkbox100000 = querySelector('.indicator-checkbox');
+        this.eventListenersCheckbox();
+    }
+
+    eventListenersCheckbox() {
+        this.checkboxOneDay.addEventListener('change', () => {
+            this.getData(this.currentCountry);
+        });
     }
 
     changeCountry(country) {
@@ -41,6 +44,7 @@ export default class ChartComponent {
         this.getData(country);
     }
 
+    // eslint-disable-next-line no-dupe-class-members
     eventListeners(chartData) {
         this.confirmedButton.addEventListener('click', () => {
             this.updateChartData(chartData.confermed, null, this.labelConfermed);
@@ -53,11 +57,11 @@ export default class ChartComponent {
         });
     }
 
-    getData(Country) {
+    getData(Country, population) {
         if (Country === '') {
-            this.getTotalCountryData(GLOBAL_TIMELINE, '');
+            this.getTotalCountryData(GLOBAL_TIMELINE, '', population);
         } else {
-            this.getTotalCountryData(COUNTRY_TIMELINE, Country);
+            this.getTotalCountryData(COUNTRY_TIMELINE, Country, population);
         }
     }
 
@@ -66,6 +70,14 @@ export default class ChartComponent {
         if (date) this.chart.data.labels = date;
         this.chart.data.datasets[0].label = label;
         this.chart.update();
+    }
+
+    updatePopulationData(populationData) {
+        this.populationData = populationData;
+        this.checkbox100000.addEventListener('change', () => {
+            console.log(this.populationData);
+            this.getData(this.currentCountry, this.populationData);
+        });
     }
 
     createChart() {
@@ -85,12 +97,15 @@ export default class ChartComponent {
                     yAxes: [{
                         ticks: {
                             beginAtZero: true,
+                            fontColor: '#fff',
                         },
                     }],
                     xAxes: [{
                         ticks: {
                             autoSkip: true,
                             fontSize: 10,
+                            fontColor: '#fff',
+                            maxTicksLimit: '10',
                         },
                     }],
                 },
@@ -98,7 +113,8 @@ export default class ChartComponent {
         });
     }
 
-    getTotalCountryData(timeline, country) {
+    getTotalCountryData(timeline, country, population) {
+        if (country === 'United States of America') country = 'India';
         this.chartDataService.getCurrentCountryData(timeline, country).then((data) => {
             let chartData;
             if (this.currentCountry === '') {
@@ -106,7 +122,20 @@ export default class ChartComponent {
             } else {
                 chartData = this.chartDataService.parseDataCityArray(data);
             }
-            this.updateChartData(chartData.death, chartData.date, this.labelConfermed);
+            if (this.checkboxOneDay.checked) {
+                chartData.confermed = chartData.confermed.slice(-30, chartData.confermed.length);
+                chartData.date = chartData.date.slice(-30, chartData.date.length);
+            }
+            if (this.checkbox100000.checked) {
+                let currentCountryPopulation;
+                if (country !== '') {
+                    currentCountryPopulation = this.populationData.find((item) => item.name === country).population;
+                } else currentCountryPopulation = WORLD_POPULATION;
+
+                // eslint-disable-next-line max-len
+                chartData.confermed = chartData.confermed.map((item) => ((item / currentCountryPopulation) * 100000).toFixed(3));
+            }
+            this.updateChartData(chartData.confermed, chartData.date, this.labelConfermed);
             this.eventListeners(chartData);
         });
     }
