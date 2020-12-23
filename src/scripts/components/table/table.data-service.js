@@ -41,7 +41,7 @@ export default class TableDataServise {
         this.dataApiStateURL = apiData[CURRENT_DATA_GLOBAL];
 
         if (country) {
-            this.dataApiStateURL = apiData.Countries[country];
+            this.dataApiStateURL = apiData.Countries.find((item) => item.Country === country);
         }
 
         if (state === CASES_SELECT.global) {
@@ -72,7 +72,11 @@ export default class TableDataServise {
     getStateAverage(dataApiStateURL, diseaseTotalData, countryData) {
         let population = WORLD_POPULATION;
         if (dataApiStateURL.Country) {
-            population = countryData.find((item) => item.name === dataApiStateURL.Country).population;
+            if (dataApiStateURL.Country === 'United Kingdom') {
+                population = 65110000;
+            } else {
+                population = countryData.find((item) => item.name === dataApiStateURL.Country).population
+            }
         }
         this.globalDataCases = {
             Confirmed: calculateCasesPerOneHundredThousand(dataApiStateURL[diseaseTotalData.confirmed], population),

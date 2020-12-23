@@ -6,12 +6,18 @@
 }
 
 .table__sick, .table__death, .table__get-well{
-    height: 100%;
     width: 33.33%;
     margin-right: 5px;
     background: $violet_background;
     display: flex;
     flex-direction: column;
+    &:hover{
+        cursor: pointer;
+        background-color: $light-gray-background;
+    }
+    span {
+        font-size: 2vw;
+    }
 }
 
 .table__get-well{
@@ -49,7 +55,7 @@
     }
 
     &__main-text {
-        font-size: 24px;
+        font-size: 2vw;
     }
 }
 
@@ -96,4 +102,53 @@
 
 .selected {
     color: $base-violet-color;
+}
+
+.Table__List-data-text {
+    font-size: 2vw;
+}
+
+.table__indicators-wrap{
+    display: flex;
+    width: 100%;
+}
+.table__indicators{
+    display: flex;
+    flex-direction: column;
+}
+
+.table__country-list {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    height: 86%;
+    margin-top: 5px;
+    background-color: #403d46;
+    overflow: auto;
+    &::-webkit-scrollbar {
+        width: 10px;
+    }
+    
+    &::-webkit-scrollbar-thumb {
+        background-color: #ababab;
+        outline: 1px solid #000000;
+    }
+    &::-webkit-scrollbar-track {
+        -webkit-box-shadow: inset 0 0 6px #b3b3b3;
+    }
+}
+
+.myChart{
+    margin-top: 60px;
+}
+
+.table_list-country{
+    border-top: 2px solid #262626;
+    border-right: 2px solid #262626;
+    white-space: nowrap;
+}
+
+.table__country, .table__country-sick, .table__country-death, .table__countryget-well {
+    background-color: #403d46;
+    flex-grow: 1;
 }
