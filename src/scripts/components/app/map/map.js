@@ -6,7 +6,7 @@ export default class Map {
         this.coordinatesData = {};
         this.map = {};
         this.mapCondition = '';
-        this.popapDescription = '';
+        this.popupDescription = '';
         this.activeCountry = '';
         this.countryMarkers = [];
         this.createMap();
@@ -21,7 +21,7 @@ export default class Map {
     }
 
     createMap() {
-        this.popapDescription = 'TotalConfirmed'.split('Total').join('total ').toLowerCase();
+        this.popupDescription = 'TotalConfirmed'.split('Total').join('total ').toLowerCase();
         this.getCoordinates();
         this.map = L.map('map').setView([0, 0], 2);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -46,7 +46,7 @@ export default class Map {
             country: country.Country,
         })
             .addTo(this.map)
-            .bindPopup(`${country.Country} ${country[this.mapCondition]} ${this.popapDescription}`);
+            .bindPopup(`${country.Country} ${country[this.mapCondition]} ${this.popupDescription}`);
         marker.on('mouseover', () => marker.openPopup());
         marker.on('mouseout', () => marker.closePopup());
         this.countryMarkers.push(marker);
