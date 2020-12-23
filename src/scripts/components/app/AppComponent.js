@@ -10,14 +10,13 @@ export default class AppComponent {
         this.allCountriesData = {};
         this.allCountriesPopData = {};
         this.fetchAllData();
-        this.dataStates = ['TotalConfirmed', 'TotalDeaths', 'TotalRecovered'];
         this.globalCases = new GlobalCases();
         this.list = new List();
-        this.activatedCountry = '';
-        this.table = new TableComponent();
         this.map = new Map();
+        this.table = new TableComponent();
         this.chart = new ChartComponent();
-        this.activeState = '';
+        this.activatedCountry = '';
+        this.activeState = 'TotalConfirmed';
         this.cachingInProgress = 'Caching in progress';
     }
 
@@ -32,14 +31,8 @@ export default class AppComponent {
                 throw Error(this.cachingInProgress);
             }
             this.allCountriesData = data;
-            this.globalCases.showContent(
-                this.allCountriesData.Global,
-                this.dataStates[0],
-                this.allCountriesData.Date,
-            );
-            this.list.showContent(this.allCountriesData.Countries, this.dataStates[0]);
+            this.updateGlobalAndListAndMapData();
             this.runCountryButtonListener();
-            this.updateMapData();
             this.table.updateData(this.allCountriesData);
             // this.table = new TableComponent(this.allCountriesData);
         });
@@ -63,17 +56,26 @@ export default class AppComponent {
         }));
         this.chart.confirmedButton.addEventListener('click', () => {
             this.activeState = this.chart.labelConfermed;
+            this.updateGlobalAndListAndMapData();
         });
         this.chart.deathButton.addEventListener('click', () => {
             this.activeState = this.chart.labelDeath;
+            this.updateGlobalAndListAndMapData();
         });
         this.chart.recoveredButton.addEventListener('click', () => {
             this.activeState = this.chart.labelRecovered;
+            this.updateGlobalAndListAndMapData();
         });
     }
 
-    updateMapData() {
-        this.map.updateMapData(this.allCountriesData.Countries, this.dataStates[0], this.activatedCountry);
+    updateGlobalAndListAndMapData() {
+        this.globalCases.showContent(
+            this.allCountriesData.Global,
+            this.activeState,
+            this.allCountriesData.Date,
+        );
+        this.list.showContent(this.allCountriesData.Countries, this.activeState);
+        this.map.updateMapData(this.allCountriesData.Countries, this.activeState);
         this.map.countryMarkers.forEach((marker) => {
             marker.on('click', this.addActiveCountryFromMap.bind(this));
         });
@@ -81,5 +83,7 @@ export default class AppComponent {
 
     addActiveCountryFromMap(event) {
         this.activatedCountry = event.target.options.country;
+        this.table.changeCountry(this.activatedCountry.trim());
+        this.chart.changeCountry(this.activatedCountry.trim());
     }
 }

@@ -1,0 +1,27 @@
+
+@media only screen and (max-width: 900px) {
+    html, body {
+        height: 200vh;
+    }
+
+    main {
+        flex-wrap: wrap;
+    }
+
+    .left-sidebar {
+        width: calc(30vw - 20px);
+        height: 110vh;
+    }
+
+    .center-section {
+        width: 100%;
+        height: calc(85vh - 70px);
+        order: 3;
+    }
+
+    .right-sidebar {
+        width: calc(70vw - 20px);
+        height: 110vh;
+        order: 2;
+    }
+}

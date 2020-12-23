@@ -2,6 +2,7 @@
 @import './list.scss';
 @import './globalCases';
 @import './map.scss';
+@import './adaptive.scss';
 @import '~leaflet/dist/leaflet.css';
 
 * {
@@ -13,24 +14,15 @@
     font-family: 'Maven Pro', sans-serif;
 }
 
+a {
+    text-decoration: none;
+}
+
 .table, .chart, .map, .list, .globalCases {
     background: $violet_background;
     text-align: center;
     font-size: 2rem;
     margin: 0 5px 5px 0;
-}
-
-.map {
-    height: calc(100%);
-}
-
-.chart, .table {
-    height: calc(50% - 5px);
-    margin-right: 0;
-}
-
-body, html {
-    height: 100%;
 }
 
 main {
@@ -40,23 +32,53 @@ main {
     padding: 10px;
 }
 
-.left-sidebar {
-    width: 20%;
-}
-
-.center-section {
-    width: 60%;
-}
-
-.right-sidebar {
-    width: 20%;
+.map {
+    height: 100%;
 }
 
 .table{
     height: 50%;
 }
 
+.chart, .table {
+    height: calc(50% - 5px);
+    margin-right: 0;
+}
+
 footer {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
     height: 50px;
     background: $dark-gray-background;
+
+    .contacts {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        width: 20%;
+    }
+
+    img {
+        height: 80%;
+    }
 }
+
+@media only screen and (min-width: 901px) {
+    body, html {
+        height: 100vh;
+    }
+
+    .left-sidebar {
+        width: 20%;
+    }
+
+    .center-section {
+        width: 40%;
+    }
+
+    .right-sidebar {
+        width: 40%;
+    }
+}
+

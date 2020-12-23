@@ -1,4 +1,4 @@
-import ElementsCreator from '../../../../utils/elementsCreator';
+import ElementsCreator from '../../../utils/elementsCreator';
 
 export default class GlobalCases {
     constructor() {

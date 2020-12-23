@@ -28,9 +28,9 @@ export default class ChartComponent {
         this.getData(this.currentCountry);
         this.ctx = this.Canvas.getContext('2d');
         this.createChart();
-        this.labelConfermed = 'Confermed';
-        this.labelDeath = 'Death';
-        this.labelRecovered = 'Recovered';
+        this.labelConfermed = 'TotalConfirmed';
+        this.labelDeath = 'TotalDeaths';
+        this.labelRecovered = 'TotalRecovered';
         this.confirmedButton = querySelector('.table__sick');
         this.deathButton = querySelector('.table__death');
         this.recoveredButton = querySelector('.table__get-well');

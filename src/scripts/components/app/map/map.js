@@ -6,14 +6,14 @@ export default class Map {
         this.coordinatesData = {};
         this.map = {};
         this.mapCondition = '';
-        this.popupDescription = '';
-        this.activeCountry = '';
+        this.popupDescription = 'total confirmed';
         this.countryMarkers = [];
+        this.scaleFactor = { TotalConfirmed: 10, TotalDeaths: 0.5, TotalRecovered: 5 };
         this.createMap();
     }
 
     getCoordinates() {
-        const json = require('../../../../../countries.json');
+        const json = require('../../../../assets/countries.json');
         json.map((country) => {
             this.coordinatesData[country.country_code] = country.latlng;
             return country.latlng;
@@ -21,7 +21,6 @@ export default class Map {
     }
 
     createMap() {
-        this.popupDescription = 'TotalConfirmed'.split('Total').join('total ').toLowerCase();
         this.getCoordinates();
         this.map = L.map('map').setView([0, 0], 2);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -30,10 +29,13 @@ export default class Map {
         this.setLegend();
     }
 
-    updateMapData(covidData = {}, condition = 'TotalConfirmed', activeCountry) {
+    updateMapData(covidData = {}, condition) {
         this.covidData = covidData;
         this.mapCondition = condition;
-        this.activeCountry = activeCountry;
+        this.popupDescription = condition.split('Total').join('total ').toLowerCase();
+        if (this.countryMarkers.length !== 0) {
+            this.countryMarkers.map((marker) => this.map.removeLayer(marker));
+        }
         this.covidData.map((country) => this.setMarker(country));
     }
 
@@ -42,13 +44,12 @@ export default class Map {
             color: 'red',
             fillColor: '#f03',
             fillOpacity: 0.5,
-            radius: country[this.mapCondition] / 10,
+            radius: country[this.mapCondition] / this.scaleFactor[this.mapCondition],
             country: country.Country,
         })
             .addTo(this.map)
             .bindPopup(`${country.Country} ${country[this.mapCondition]} ${this.popupDescription}`);
         marker.on('mouseover', () => marker.openPopup());
-        marker.on('mouseout', () => marker.closePopup());
         this.countryMarkers.push(marker);
     }
 
