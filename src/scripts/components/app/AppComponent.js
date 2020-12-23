@@ -85,5 +85,7 @@ export default class AppComponent {
         this.activatedCountry = event.target.options.country;
         this.table.changeCountry(this.activatedCountry.trim());
         this.chart.changeCountry(this.activatedCountry.trim());
+        const countryContainer = this.list.searchContainerByName(`${this.activatedCountry} `);
+        this.list.setActivatedCountry(this.activatedCountry, countryContainer);
     }
 }

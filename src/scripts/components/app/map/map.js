@@ -22,10 +22,14 @@ export default class Map {
 
     createMap() {
         this.getCoordinates();
-        this.map = L.map('map').setView([0, 0], 2);
+        this.map = L.map('map').setView([0, 0], 1);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+            noWrap: true,
+            bounds: [[-90, -180], [90, 180]],
         }).addTo(this.map);
+        this.map.options.minZoom = 1;
+        this.map.options.noWrap = true;
         this.setLegend();
     }
 

@@ -72,7 +72,17 @@ export default class List {
         } else {
             this.activatedCountryContainer = container;
             this.activatedCountryContainer.id = 'checked_country';
+            this.activatedCountryContainer.scrollIntoView();
         }
         return countryName;
+    }
+
+    searchContainerByName(name) {
+        return this.countryContainers.reduce((callBack, container) => {
+            if (container.name.innerText === name) {
+                return container.container;
+            }
+            return callBack;
+        }, 0);
     }
 }
