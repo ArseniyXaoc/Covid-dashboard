@@ -2,7 +2,6 @@
 @import './list.scss';
 @import './globalCases';
 @import './map.scss';
-@import './adaptive.scss';
 @import '~leaflet/dist/leaflet.css';
 
 * {
@@ -10,18 +9,29 @@
     padding: 0;
     box-sizing: border-box;
     color: $main-text-color;
+}
+
+body {
     font-size: 14px;
     font-family: 'Maven Pro', sans-serif;
 }
 
+h2 {
+    font-size: 1.8rem;
+}
+
 a {
     text-decoration: none;
+    color: $base-violet-color;
+    transition: color .3s ease;
+    &:hover {
+        color: $white;
+    }
 }
 
 .table, .chart, .map, .list, .globalCases {
     background: $violet_background;
     text-align: center;
-    font-size: 2rem;
     margin: 0 5px 5px 0;
 }
 
@@ -36,13 +46,8 @@ main {
     height: 100%;
 }
 
-.table{
+.table, .chart {
     height: 50%;
-}
-
-.chart, .table {
-    height: calc(50% - 5px);
-    margin-right: 0;
 }
 
 footer {
@@ -62,23 +67,10 @@ footer {
     img {
         height: 80%;
     }
-}
 
-@media only screen and (min-width: 901px) {
-    body, html {
-        height: 100vh;
-    }
-
-    .left-sidebar {
-        width: 20%;
-    }
-
-    .center-section {
-        width: 40%;
-    }
-
-    .right-sidebar {
-        width: 40%;
+    .github-link {
+        margin-right: 5px;
     }
 }
 
+@import './adaptive.scss';

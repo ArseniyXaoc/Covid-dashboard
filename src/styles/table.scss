@@ -14,9 +14,6 @@
         cursor: pointer;
         background-color: $light-gray-background;
     }
-    span {
-        font-size: 2vw;
-    }
 }
 
 .table__get-well{
@@ -33,7 +30,6 @@
     display: flex;
     background: $gary-background;
     width: 100%;
-    height: 100%;
 }
 
 .table__switch {
@@ -54,11 +50,10 @@
     }
 
     &__main-text {
-        font-size: 2vw;
+        font-size: 2rem;
+        color: $base-violet-color;
     }
 }
-
-
 
 .switch__input {
     display: block;
@@ -104,16 +99,19 @@
 }
 
 .Table__List-data-text {
-    font-size: 2vw;
+    color: $base-violet-color;
 }
 
-.table__indicators-wrap{
+.table__indicators-wrap {
     display: flex;
     width: 100%;
+    font-size: 2rem;
 }
-.table__indicators{
+
+.table__indicators {
     display: flex;
     flex-direction: column;
+    overflow-y: auto;
 }
 
 .table__country-list {
@@ -135,10 +133,6 @@
     &::-webkit-scrollbar-track {
         -webkit-box-shadow: inset 0 0 6px #b3b3b3;
     }
-}
-
-.myChart{
-    margin-top: 60px;
 }
 
 .table_list-country{

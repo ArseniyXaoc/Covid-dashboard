@@ -87,6 +87,12 @@ export default class ChartComponent {
                             beginAtZero: true,
                         },
                     }],
+                    xAxes: [{
+                        ticks: {
+                            autoSkip: true,
+                            fontSize: 10,
+                        },
+                    }],
                 },
             },
         });
