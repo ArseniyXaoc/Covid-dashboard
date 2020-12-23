@@ -6,13 +6,9 @@ import {
 } from '../constants/data-service.constants';
 
 export default class DataService {
-    constructor() {
-    }
-
     // eslint-disable-next-line class-methods-use-this
     async getData(dataRequest) {
         try {
-            //const data = require('../../../summary.json') // await response.json();
             const data = await fetch(`${COVID_API_URL}${dataRequest}`);
             return await data.json();
         } catch (error) {

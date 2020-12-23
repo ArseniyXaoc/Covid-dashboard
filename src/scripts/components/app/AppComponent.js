@@ -31,6 +31,7 @@ export default class AppComponent {
                 this.allCountriesData.Date,
             );
             this.list.showContent(this.allCountriesData.Countries, this.dataStates[0]);
+            this.runCountryButtonListener();
             this.updateMapData();
             this.table.updateData(this.allCountriesData);
             // this.table = new TableComponent(this.allCountriesData);
@@ -44,13 +45,18 @@ export default class AppComponent {
 
     runCountryButtonListener() {
         this.list.countryContainers.forEach((country) => country.container.addEventListener('click', () => {
-            this.activatedCountry = country.name.innerText;
+            if (this.activatedCountry !== country.name.innerText) {
+                this.activatedCountry = country.name.innerText;
+            } else {
+                this.activatedCountry = '';
+            }
+            this.list.setActivatedCountry(this.activatedCountry, country.container);
         }));
     }
 
     updateMapData() {
         this.map.updateMapData(this.allCountriesData.Countries, this.dataStates[0], this.activatedCountry);
-        this.map.countryMarkers.forEach(marker => {
+        this.map.countryMarkers.forEach((marker) => {
             marker.on('click', this.addActiveCountryFromMap.bind(this));
         });
     }

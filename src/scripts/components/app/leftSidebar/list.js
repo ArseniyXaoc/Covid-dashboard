@@ -6,6 +6,7 @@ export default class List {
         this.list = document.querySelector('.list');
         this.countryContainers = [];
         this.search = {};
+        this.activatedCountryContainer = undefined;
     }
 
     createHTML() {
@@ -60,5 +61,18 @@ export default class List {
 
     dataSort(state) {
         this.countryData = this.countryData.sort((a, b) => b[state] - a[state]);
+    }
+
+    setActivatedCountry(countryName, container) {
+        if (this.activatedCountryContainer !== undefined) {
+            this.activatedCountryContainer.removeAttribute('id');
+        }
+        if (!countryName) {
+            this.activatedCountryContainer = undefined;
+        } else {
+            this.activatedCountryContainer = container;
+            this.activatedCountryContainer.id = 'checked_country';
+        }
+        return countryName;
     }
 }

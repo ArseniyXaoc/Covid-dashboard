@@ -16,6 +16,7 @@ export default class Map {
         const json = require('../../../../../countries.json');
         json.map((country) => {
             this.coordinatesData[country.country_code] = country.latlng;
+            return country.latlng;
         });
     }
 
@@ -26,7 +27,7 @@ export default class Map {
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
         }).addTo(this.map);
-
+        this.setLegend();
     }
 
     updateMapData(covidData = {}, condition = 'TotalConfirmed', activeCountry) {
@@ -42,13 +43,23 @@ export default class Map {
             fillColor: '#f03',
             fillOpacity: 0.5,
             radius: country[this.mapCondition] / 10,
-            country: country.Country
+            country: country.Country,
         })
             .addTo(this.map)
-            .bindPopup(`<button class="popap" id=${country.Country}>
-                ${country.Country} ${country[this.mapCondition]} ${this.popapDescription}
-            </button>`)
-            // .on('click', function() {console.log(country.Country)});
+            .bindPopup(`${country.Country} ${country[this.mapCondition]} ${this.popapDescription}`);
+        marker.on('mouseover', () => marker.openPopup());
+        marker.on('mouseout', () => marker.closePopup());
         this.countryMarkers.push(marker);
+    }
+
+    setLegend() {
+        const legend = L.control({ position: 'topright' });
+        legend.onAdd = () => {
+            const div = L.DomUtil.create('div', 'info legend');
+            div.className = 'map_legend';
+            div.innerHTML += '<span class="legend_circle"></span><span>Cases by country</span>';
+            return div;
+        };
+        legend.addTo(this.map);
     }
 }

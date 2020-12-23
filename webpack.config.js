@@ -8,7 +8,7 @@ module.exports = {
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: '[name].js',
-        publicPath: ''
+        publicPath: '',
     },
     devtool: 'cheap-module-source-map',
     devServer: {
@@ -51,7 +51,7 @@ module.exports = {
                 options: {
                     name: './fonts/[name].[ext]',
                 },
-            }
+            },
         ],
     },
 };
